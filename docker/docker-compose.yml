@@ -1,0 +1,54 @@
+version: '2'
+
+services:
+    php_symfony_api:
+        container_name: php_symfony_api
+        build:
+            context: php7-fpm
+            args:
+                TIMEZONE: ${TIMEZONE}
+        networks:
+            symfony_api:
+                ipv4_address: 10.5.0.2
+        volumes:
+            - ${APP_PATH}:/var/www/api-example-symfony
+        links:
+            - mysql_symfony_api
+        environment:
+            XDEBUG_CONFIG: remote_host=${IP_ADDRESS}
+
+    mysql_symfony_api:
+        container_name: mysql_symfony_api
+        image: mysql:8
+        volumes:
+            - mysql_symfony_api_data_container:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_USER: ${DB_USER}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - 10.5.0.1:3306:3306
+            - 127.0.0.1:3306:3306
+        networks:
+            symfony_api:
+                ipv4_address: 10.5.0.3
+
+    adminer_symfony_api:
+        container_name: adminer_symfony_api
+        image: adminer
+        ports:
+            - 10.5.0.1:8080:8080
+            - 127.0.0.1:8080:8080
+
+networks:
+    symfony_api:
+        driver: bridge
+        ipam:
+            config:
+            - subnet: 10.5.0.0/16
+              gateway: 10.5.0.1
+
+
+volumes:
+    mysql_symfony_api_data_container:
