@@ -1,17 +1,30 @@
-version: '2'
+version: '3.3'
 
 services:
+    nginx_symfony_api:
+        build:
+            context: nginx
+        volumes:
+            - ${APP_PATH}:/var/www
+        depends_on:
+            - php_symfony_api
+        ports:
+            - 80:80
+        networks:
+            symfony_api:
+                ipv4_address: 10.8.0.2
+
     php_symfony_api:
         container_name: php_symfony_api
         build:
-            context: php7-fpm
+            context: php8-fpm
             args:
                 TIMEZONE: ${TIMEZONE}
         networks:
             symfony_api:
-                ipv4_address: 10.5.0.2
+                ipv4_address: 10.8.0.3
         volumes:
-            - ${APP_PATH}:/var/www/api-example-symfony
+            - ${APP_PATH}:/var/www
         links:
             - mysql_symfony_api
         environment:
@@ -28,27 +41,23 @@ services:
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
         ports:
-            - 10.5.0.1:3306:3306
-            - 127.0.0.1:3306:3306
+            - 3306:3306
         networks:
             symfony_api:
-                ipv4_address: 10.5.0.3
+                ipv4_address: 10.8.0.4
 
     adminer_symfony_api:
         container_name: adminer_symfony_api
         image: adminer
         ports:
-            - 10.5.0.1:8080:8080
-            - 127.0.0.1:8080:8080
+            - 8080:8080
 
 networks:
     symfony_api:
         driver: bridge
         ipam:
             config:
-            - subnet: 10.5.0.0/16
-              gateway: 10.5.0.1
-
+            - subnet: 10.8.0.0/16
 
 volumes:
     mysql_symfony_api_data_container:
