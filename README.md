@@ -20,12 +20,8 @@ To go inside php container run:
 Inside container run
     
     composer install
-
-To start local web server run next command inside container:
-    
-    symfony server:start
-    
-Url for browser: http://10.5.0.2:8000/    
+ 
+Open http://10.8.0.1/ in browser   
 
 ### How to run migrations and fixtures
     php bin/console doctrine:migrations:migrate
