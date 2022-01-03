@@ -21,12 +21,7 @@ Inside container run
     
     composer install
  
-Open http://10.8.0.1/ in browser   
-
-### How to run migrations and fixtures
-    php bin/console doctrine:migrations:migrate
-    php bin/console doctrine:fixtures:load
-    
+Application is available at http://10.8.0.1
 
 ### How to generate the SSH keys
 
@@ -35,7 +30,12 @@ Open http://10.8.0.1/ in browser
     
     openssl genrsa -out config/jwt/private-test.pem -aes256 4096
     openssl rsa -pubout -in config/jwt/private-test.pem -out config/jwt/public-test.pem
-### Test endpoint for jwt token generation
+
+### How to run migrations and fixtures
+    php bin/console doctrine:migrations:migrate --no-interaction
+    php bin/console doctrine:fixtures:load --no-interaction
+
+### Endpoint for jwt token generation
     
-    curl -X POST -H "Content-Type: application/json" http://10.5.0.2:8000/api/login_check -d '{"username":"test","password":"test"}'
+    curl -X POST -H "Content-Type: application/json" http://10.8.0.1/api/login_check -d '{"username":"test","password":"test"}'
 

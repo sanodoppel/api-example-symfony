@@ -8,8 +8,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class UserFixtures extends Fixture
 {
-    public const ACTIVE_SUBSTANCE_COUNT = 3;
-
     public function load(ObjectManager $manager)
     {
         $user = new User();

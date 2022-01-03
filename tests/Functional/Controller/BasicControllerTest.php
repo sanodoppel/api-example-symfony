@@ -2,16 +2,17 @@
 
 namespace App\Tests\Functional\Controller;
 
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 abstract class BasicControllerTest extends WebTestCase
 {
     /**
-     * @param mixed $client
+     * @param KernelBrowser $client
      *
-     * @return mixed $client
+     * @return KernelBrowser $client
      */
-    public function setTokenToClient($client)
+    public function setTokenToClient(KernelBrowser $client): KernelBrowser
     {
         $client->request(
             'POST',

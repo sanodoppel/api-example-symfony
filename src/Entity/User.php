@@ -3,14 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="user")
  */
-class User implements UserInterface, \Serializable
+class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     /**
      * @ORM\Id
@@ -73,32 +74,14 @@ class User implements UserInterface, \Serializable
         $this->password = $password;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return array('ROLE_USER');
     }
 
-    public function getSalt()
+    public function getUserIdentifier(): string
     {
-        return null;
-    }
-
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized, array('allowed_classes' => false));
+        return $this->username;
     }
 
     public function eraseCredentials()
