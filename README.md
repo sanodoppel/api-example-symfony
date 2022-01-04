@@ -37,5 +37,5 @@ Application is available at http://10.8.0.1
 
 ### Endpoint for jwt token generation
     
-    curl -X POST -H "Content-Type: application/json" http://10.8.0.1/api/login_check -d '{"username":"test","password":"test"}'
+    curl -X POST -H "Content-Type: application/json" http://10.8.0.1/api/auth -d '{"username":"test","password":"test"}'
 

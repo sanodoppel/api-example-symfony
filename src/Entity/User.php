@@ -3,13 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="user")
+ * @UniqueEntity(fields={"username"})
  */
 class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
@@ -23,14 +25,12 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     /**
      * @ORM\Column(type="string", length=100, unique=true)
      *
-     * @Assert\NotBlank
+     * @Groups({"user_get"})
      */
     private string $username;
 
     /**
      * @ORM\Column(type="string", length=100)
-     *
-     * @Assert\NotBlank
      */
     private string $password;
 
@@ -76,7 +76,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     public function getRoles(): array
     {
-        return array('ROLE_USER');
+        return ['ROLE_USER'];
     }
 
     public function getUserIdentifier(): string

@@ -8,11 +8,14 @@ use Doctrine\Persistence\ObjectManager;
 
 class UserFixtures extends Fixture
 {
+    public const DEFAULT_USERNAME = 'test';
+    public const DEFAULT_PASSWORD = 'test';
+
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setUsername('test');
-        $user->setPassword(password_hash('test', PASSWORD_BCRYPT));
+        $user->setUsername(self::DEFAULT_USERNAME);
+        $user->setPassword(password_hash(self::DEFAULT_PASSWORD, PASSWORD_BCRYPT));
 
         $manager->persist($user);
 
