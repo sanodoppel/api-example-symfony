@@ -5,7 +5,7 @@ services:
         build:
             context: nginx
         volumes:
-            - ${APP_PATH}:/var/www
+            - ${APP_PATH}:/app
         depends_on:
             - php_symfony_api
         ports:
@@ -24,7 +24,7 @@ services:
             symfony_api:
                 ipv4_address: 10.8.0.3
         volumes:
-            - ${APP_PATH}:/var/www
+            - ${APP_PATH}:/app
         links:
             - mysql_symfony_api
         environment:

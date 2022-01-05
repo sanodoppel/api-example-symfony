@@ -38,4 +38,4 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER www-data
 
-WORKDIR /var/www
+WORKDIR /app
