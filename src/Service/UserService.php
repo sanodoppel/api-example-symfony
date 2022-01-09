@@ -20,23 +20,37 @@ class UserService
     }
 
     /**
-     * @param FormInterface $form
+     * @param string $username
+     * @param string $password
      * @return User
      */
-    public function register(FormInterface $form): User
+    public function register(string $username, string $password): User
     {
-        /**
-         * @var User $user
-         */
-        $user = $form->getData();
+        $user = new User();
 
+        $user->setUsername($username);
         $user->setPassword($this->passwordHasher->hashPassword(
             $user,
-            $form->get('password')->getData()
+            $password
         ));
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
         return $user;
+    }
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public function list(int $limit = User::LIMIT, int $offset = 0): array
+    {
+        return $this->entityManager->getRepository(User::class)->findBy(
+            [],
+            ['id' => 'DESC'],
+            $limit,
+            $offset
+        );
     }
 }

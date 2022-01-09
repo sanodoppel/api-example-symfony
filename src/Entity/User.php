@@ -15,6 +15,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
+    public const LIMIT = 10;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -25,7 +27,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     /**
      * @ORM\Column(type="string", length=100, unique=true)
      *
-     * @Groups({"user_get"})
+     * @Groups({"user_get", "user_list"})
      */
     private string $username;
 

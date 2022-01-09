@@ -172,6 +172,9 @@
     "phpdocumentor/type-resolver": {
         "version": "1.4.0"
     },
+    "predis/predis": {
+        "version": "v1.1.10"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -300,6 +303,18 @@
     "symfony/http-kernel": {
         "version": "v5.1.8"
     },
+    "symfony/messenger": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "25e3c964d3aee480b3acc3114ffb7940c89edfed"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/options-resolver": {
         "version": "v5.1.8"
     },
@@ -353,6 +368,9 @@
     },
     "symfony/property-info": {
         "version": "v5.1.8"
+    },
+    "symfony/redis-messenger": {
+        "version": "v6.0.2"
     },
     "symfony/routing": {
         "version": "5.1",

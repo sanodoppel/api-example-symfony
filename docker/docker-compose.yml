@@ -46,6 +46,15 @@ services:
             symfony_api:
                 ipv4_address: 10.8.0.4
 
+    redis_symfony_api:
+        container_name: redis_symfony_api
+        image: redis:alpine
+        ports:
+            - 6379:6379
+        networks:
+            symfony_api:
+                ipv4_address: 10.8.0.5
+
     adminer_symfony_api:
         container_name: adminer_symfony_api
         image: adminer
