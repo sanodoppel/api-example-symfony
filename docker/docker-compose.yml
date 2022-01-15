@@ -51,7 +51,9 @@ services:
         image: adminer
         ports:
             - 8080:8080
-
+        networks:
+            symfony_api:
+                ipv4_address: 10.8.0.5
 networks:
     symfony_api:
         driver: bridge
