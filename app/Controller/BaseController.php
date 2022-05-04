@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class BaseController extends AbstractController
@@ -13,6 +15,11 @@ abstract class BaseController extends AbstractController
      * @var NormalizerInterface
      */
     protected NormalizerInterface $normalizer;
+
+    /**
+     * @var ValidatorInterface
+     */
+    protected ValidatorInterface $validator;
 
     /**
      * @param NormalizerInterface $normalizer
@@ -24,21 +31,24 @@ abstract class BaseController extends AbstractController
     }
 
     /**
+     * @param ValidatorInterface $validator
+     */
+    #[Required]
+    public function setValidator(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
+    }
+
+    /**
      * @param FormInterface $form
      * @return array
      */
-    protected function getFormErrors(FormInterface $form): array
+    protected function getErrors(ConstraintViolationList $violationList): array
     {
         $errors = [];
 
-        foreach ($form->all() as $key => $child) {
-
-            foreach ($child->getErrors(true) as $error) {
-                if (!$error->getOrigin()?->getParent()?->isRoot()) {
-                    $key .= '.' . $error->getOrigin()->getName();
-                }
-                $errors[$key][] = $error->getMessage();
-            }
+        foreach ($violationList as $key => $child) {
+            $errors[$child->getPropertyPath()][] = $child->getMessage();
         }
 
         return $errors;

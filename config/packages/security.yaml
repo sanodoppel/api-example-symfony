@@ -9,7 +9,7 @@ security:
     providers:
         users:
             entity:
-                class: App\Entity\User
+                class: Management\Domain\User
                 property: username
     firewalls:
         login:
@@ -19,11 +19,6 @@ security:
                 check_path:               api.auth
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
-        api:
-            pattern:   ^/api
-            stateless: true
-            jwt: ~
 
     access_control:
-        - { path: ^/api/auth, roles: PUBLIC_ACCESS }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api,       roles: PUBLIC_ACCESS }

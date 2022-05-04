@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Management\Infrastructure\Persistence\Doctrine\User;
 
 class UserFixtures extends Fixture
 {
