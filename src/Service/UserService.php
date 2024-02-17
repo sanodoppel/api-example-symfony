@@ -23,7 +23,7 @@ class UserService
      * @param FormInterface $form
      * @return User
      */
-    public function register(FormInterface $form): User
+    public function create(FormInterface $form): User
     {
         /**
          * @var User $user

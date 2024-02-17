@@ -13,6 +13,6 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
 if (file_exists(dirname(__DIR__).'/var/test.db')) {
     shell_exec('rm ' . dirname(__DIR__) . '/var/test.db');
 }
-shell_exec('php ' .dirname(__DIR__). '/bin/console doctrine:database:create --env=test');
-shell_exec('php ' .dirname(__DIR__). '/bin/console doctrine:schema:create --env=test');
+shell_exec('php ' .dirname(__DIR__). '/bin/console doctrine:database:create --env=test --quiet');
+shell_exec('php ' .dirname(__DIR__). '/bin/console doctrine:schema:create --env=test --quiet');
 shell_exec('php ' .dirname(__DIR__). '/bin/console doctrine:fixtures:load --env=test --quiet');

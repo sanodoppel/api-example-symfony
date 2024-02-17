@@ -10,9 +10,6 @@ services:
             - php_symfony_api
         ports:
             - 80:80
-        networks:
-            symfony_api:
-                ipv4_address: 10.8.0.2
 
     php_symfony_api:
         container_name: php_symfony_api
@@ -20,15 +17,14 @@ services:
             context: php8-fpm
             args:
                 TIMEZONE: ${TIMEZONE}
-        networks:
-            symfony_api:
-                ipv4_address: 10.8.0.3
         volumes:
             - ${APP_PATH}:/app
         links:
             - mysql_symfony_api
         environment:
-            XDEBUG_CONFIG: remote_host=${IP_ADDRESS}
+            PHP_IDE_CONFIG: serverName=localhost
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
 
     mysql_symfony_api:
         container_name: mysql_symfony_api
@@ -42,24 +38,12 @@ services:
             MYSQL_PASSWORD: ${DB_PASSWORD}
         ports:
             - 3306:3306
-        networks:
-            symfony_api:
-                ipv4_address: 10.8.0.4
 
     adminer_symfony_api:
         container_name: adminer_symfony_api
         image: adminer
         ports:
             - 8080:8080
-        networks:
-            symfony_api:
-                ipv4_address: 10.8.0.5
-networks:
-    symfony_api:
-        driver: bridge
-        ipam:
-            config:
-            - subnet: 10.8.0.0/16
 
 volumes:
     mysql_symfony_api_data_container:

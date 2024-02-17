@@ -18,7 +18,7 @@ abstract class BaseController extends AbstractController
      * @param NormalizerInterface $normalizer
      */
     #[Required]
-    public function setNormalizer(NormalizerInterface $normalizer)
+    public function setNormalizer(NormalizerInterface $normalizer): void
     {
         $this->normalizer = $normalizer;
     }
@@ -32,7 +32,6 @@ abstract class BaseController extends AbstractController
         $errors = [];
 
         foreach ($form->all() as $key => $child) {
-
             foreach ($child->getErrors(true) as $error) {
                 if (!$error->getOrigin()?->getParent()?->isRoot()) {
                     $key .= '.' . $error->getOrigin()->getName();

@@ -29,7 +29,7 @@ class UserTest extends BasicControllerTest
             'password' => 'new_password',
         ];
 
-        $this->setTokenToClient($client)->request('POST', '/api/user/register', [], [], [], json_encode($data));
+        $client->request('POST', '/api/user', [], [], [], json_encode($data));
         $this->assertEquals(JsonResponse::HTTP_CREATED, $client->getResponse()->getStatusCode());
     }
 }

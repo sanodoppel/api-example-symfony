@@ -18,7 +18,7 @@ class UserController extends BaseController
     /**
      * @param UserService $userService
      */
-    public function __construct(private UserService $userService)
+    public function __construct(private readonly UserService $userService)
     {
     }
 
@@ -30,7 +30,7 @@ class UserController extends BaseController
      * )
      * @OA\Response(
      *     response=201,
-     *     description="Register new user",
+     *     description="Create new user",
      *     @OA\JsonContent(
      *         type="object"
      *     )
@@ -38,14 +38,14 @@ class UserController extends BaseController
      * @OA\Tag(name="User")
      * @Security(name="Bearer")
      */
-    #[Route("/api/user/register", name: "api_user_register", methods: ["POST"])]
+    #[Route("/api/user", name: "api_user_create", methods: ["POST"])]
     public function register(Request $request): JsonResponse
     {
         $form = $this->createForm(UserFormType::class, new User());
         $form->submit(json_decode($request->getContent(), true));
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->userService->register($form);
+            $this->userService->create($form);
 
             return new JsonResponse(null, JsonResponse::HTTP_CREATED);
         }

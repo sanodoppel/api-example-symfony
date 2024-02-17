@@ -9,6 +9,10 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 class CustomProblemNormalizer implements NormalizerInterface
 {
+    public function __construct()
+    {
+    }
+
     /**
      * @var string
      */
@@ -18,18 +22,25 @@ class CustomProblemNormalizer implements NormalizerInterface
      * @param KernelInterface $kernel
      */
     #[Required]
-    public function setEnvironment(KernelInterface $kernel)
+    public function setEnvironment(KernelInterface $kernel): void
     {
         $this->environment = $kernel->getEnvironment();
     }
 
-    public function normalize($exception, $format = null, array $context = [])
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
-        return ['error' => $this->environment === 'dev' ? $exception->getMessage() : 'An error occurred'];
+        return ['error' => $this->environment === 'dev' ? $object->getMessage() : 'An error occurred'];
     }
 
-    public function supportsNormalization($data, $format = null, array $context = [])
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof FlattenException;
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            FlattenException::class => true,
+        ];
     }
 }
