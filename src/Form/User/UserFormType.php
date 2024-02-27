@@ -8,12 +8,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @OA\Schema
- */
+#[OA\Schema]
 class UserFormType extends AbstractType
 {
     /**

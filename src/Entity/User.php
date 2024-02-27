@@ -9,20 +9,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity]
-#[ORM\Table(name: "user")]
-#[UniqueEntity(fields: ["username"])]
+#[ORM\Table(name: 'user')]
+#[UniqueEntity(fields: ['username'])]
 class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer", options: ["unsigned" => true])]
+    #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
     private int $id;
 
-    #[ORM\Column(type: "string", length: 100, unique: true)]
-    #[Groups("user_get")]
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
+    #[Groups('user_get')]
     private string $username;
 
-    #[ORM\Column(type: "string", length: 100)]
+    #[ORM\Column(type: 'string', length: 100)]
     private string $password;
 
     public function getId(): int
