@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[OA\Tag(name: 'User')]
+#[Security(name: 'Bearer')]
 class UserController extends BaseController
 {
     /**
@@ -36,9 +38,7 @@ class UserController extends BaseController
             type: 'object'
         )
     )]
-    #[OA\Tag(name: 'User')]
     #[Route('/api/user', name: 'api_user_create', methods: ['POST'])]
-    #[Security(name: 'Bearer')]
     public function register(Request $request): JsonResponse
     {
         $form = $this->createForm(UserFormType::class, new User());
@@ -60,9 +60,7 @@ class UserController extends BaseController
             ref: new Model(type: User::class, groups: ['user_get'])
         )
     )]
-    #[OA\Tag(name: 'User')]
     #[Route('/api/user', name: 'api_user_get', methods: ['GET'])]
-    #[Security(name: 'Bearer')]
     public function get(): JsonResponse
     {
         return new JsonResponse($this->normalizer->normalize($this->getUser(), 'array', ['groups' => ['user_get']]));

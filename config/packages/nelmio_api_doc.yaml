@@ -3,12 +3,33 @@ nelmio_api_doc:
         info:
             title: Symfony api example
             version: 1.0.0
+        
+        security:
+            - Bearer: []
+
+        components:
+            securitySchemes:
+                Bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+                    description: 'Enter JWT token'
+
+            parameters:
+                Authorization:
+                    name: Authorization
+                    in: header
+                    description: 'Bearer {token}'
+                    required: true
+                    schema:
+                        type: string
 
         paths:
             /api/auth:
                 post:
                     tags:
                         - Auth
+                    security: [] # This removes auth requirement for login endpoint
                     requestBody:
                         required: true
                         content:
@@ -29,14 +50,6 @@ nelmio_api_doc:
                                         properties:
                                             token:
                                                 type: string
-
-        components:
-            securitySchemes:
-                Bearer:
-                    type: http
-                    scheme: bearer
-                    bearerFormat: JWT
-
 
     areas: # to filter documented areas
         path_patterns: # an array of regexps

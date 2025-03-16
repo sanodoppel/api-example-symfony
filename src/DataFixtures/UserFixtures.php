@@ -11,7 +11,7 @@ class UserFixtures extends Fixture
     public const DEFAULT_USERNAME = 'test';
     public const DEFAULT_PASSWORD = 'test';
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = new User();
         $user->setUsername(self::DEFAULT_USERNAME);

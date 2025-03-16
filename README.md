@@ -34,7 +34,7 @@ Run migrations and fixtures
     php bin/console doctrine:migrations:migrate --no-interaction
     php bin/console doctrine:fixtures:load --no-interaction
 
-Application is available at http://10.8.0.1
+Application is available at http://localhost
 
 ### Endpoint for jwt token generation
     
